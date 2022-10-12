@@ -6,7 +6,6 @@
 
 
 const x = document.getElementById("input_area");
-const submit_button = document.getElementById("submit-button");
 const viz_button = document.getElementById("viz-button");
 
 const re = /[A-Za-z]/g;
@@ -28,16 +27,6 @@ function create_alpha_dict(empty_table, alphabet_arr) {
   return empty_table;
 };
 
-submit_button.addEventListener('click', function handleSubmit(event) {
-
-  h = create_alpha_dict(h, alphabet_creator());
-
-  var char_array = x.value.toLowerCase().match(re);
-  char_array.forEach(function (i) {
-    h[i] = (h[i] || 0) + 1;
-  });
-})
-
 //Now do the d3 part
 // set the dimensions and margins of the graph
 const margin = {
@@ -58,7 +47,13 @@ const svg = d3.select("#data_viz")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
 viz_button.addEventListener('click', function (event) {
-  console.log('nina', h);
+  
+  h = create_alpha_dict(h, alphabet_creator());
+
+  var char_array = x.value.toLowerCase().match(re);
+  char_array.forEach(function (i) {
+    h[i] = (h[i] || 0) + 1;
+  });
 
   // X axis
   const x_axis = d3.scaleBand()
